@@ -45,6 +45,9 @@ namespace BinarySerializer.GBA.Audio.GAX
             NumChannels = s.Serialize<ushort>(NumChannels, name: nameof(NumChannels));
             NumRowsPerPattern = s.Serialize<ushort>(NumRowsPerPattern, name: nameof(NumRowsPerPattern));
             NumPatternsPerChannel = s.Serialize<ushort>(NumPatternsPerChannel, name: nameof(NumPatternsPerChannel));
+            if (NumChannels > 32) throw new BinarySerializableException(this, $"Incorrect {nameof(NumChannels)}: {NumChannels}");
+            if (NumRowsPerPattern >= 0x200) throw new BinarySerializableException(this, $"Incorrect {nameof(NumRowsPerPattern)}: {NumRowsPerPattern}");
+            if (NumPatternsPerChannel >= 0x100) throw new BinarySerializableException(this, $"Incorrect {nameof(NumPatternsPerChannel)}: {NumPatternsPerChannel}");
             LoopPoint = s.Serialize<ushort>(LoopPoint, name: nameof(LoopPoint));
             Volume = s.Serialize<ushort>(Volume, name: nameof(Volume));
             UShort_0A = s.Serialize<ushort>(UShort_0A, name: nameof(UShort_0A));
