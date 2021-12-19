@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BinarySerializer.GBA.Audio.GAX
 {
-    public class GAX2_PatternHeader : BinarySerializable
+    public class GAX_PatternHeader : BinarySerializable
     {
         public ushort SequenceOffset { get; set; }
         public sbyte Transpose { get; set; }

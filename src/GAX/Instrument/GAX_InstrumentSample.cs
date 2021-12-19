@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BinarySerializer.GBA.Audio.GAX
 {
-    public class GAX2_SampleDefinition : BinarySerializable {
+    public class GAX_InstrumentSample : BinarySerializable {
         public short Pitch { get; set; }
         public byte Byte_02 { get; set; }
         public bool IsBidirectional { get; set; }

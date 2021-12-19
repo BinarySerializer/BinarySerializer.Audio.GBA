@@ -2,7 +2,7 @@
 
 namespace BinarySerializer.GBA.Audio.GAX
 {
-    public class GAX2_PatternRow : BinarySerializable
+    public class GAX_PatternRow : BinarySerializable
     {
         public byte Flags { get; set; }
         public byte Note { get; set; }

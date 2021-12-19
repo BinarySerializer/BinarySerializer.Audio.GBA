@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace BinarySerializer.GBA.Audio.GAX
 {
-    public class GAX2_InstrumentRow : BinarySerializable {
-        public sbyte RelativeNoteNumber { get; set; }
+    public class GAX_InstrumentRow : BinarySerializable {
+        public byte RelativeNoteNumber { get; set; }
         public bool DontUseNotePitch { get; set; } // Is this a sign?
         public byte SampleIndex { get; set; } // Starting from 1
         public byte Byte_03 { get; set; }
         public Effect[] Effects { get; set; }
 
         public override void SerializeImpl(SerializerObject s) {
-            RelativeNoteNumber = s.Serialize<sbyte>(RelativeNoteNumber, name: nameof(RelativeNoteNumber));
+            RelativeNoteNumber = s.Serialize<byte>(RelativeNoteNumber, name: nameof(RelativeNoteNumber));
             DontUseNotePitch = s.Serialize<bool>(DontUseNotePitch, name: nameof(DontUseNotePitch));
 			SampleIndex = s.Serialize<byte>(SampleIndex, name: nameof(SampleIndex));
 			Byte_03 = s.Serialize<byte>(Byte_03, name: nameof(Byte_03));

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BinarySerializer.GBA.Audio.GAX
 {
-    public class GAX2_InstrumentEnvelope : BinarySerializable {
+    public class GAX_InstrumentEnvelope : BinarySerializable {
         public byte NumPoints { get; set; }
         public byte? Sustain { get; set; }
         public byte? LoopStart { get; set; }
