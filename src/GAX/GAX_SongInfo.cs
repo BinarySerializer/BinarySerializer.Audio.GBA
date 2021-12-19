@@ -83,7 +83,7 @@ namespace BinarySerializer.GBA.Audio.GAX {
                 if (endOffset != null) {
                     s.DoAt(endOffset, () => {
                         Name = s.Serialize<string>(Name, name: nameof(Name));
-                        const string GAXNamePattern = @"^""(?<title>[^""]*)"" © (?<artist>[A-Za-z0-9_\-\s]*)";
+                        const string GAXNamePattern = @"^""(?<title>[^""]*)"" © (?<artist>[A-Za-z0-9_\-\s]*).*";
                         var m = Regex.Match(Name, GAXNamePattern);
                         if (m.Success) {
                             ParsedName = m.Groups["title"].Value;

@@ -10,7 +10,7 @@ namespace BinarySerializer.GBA.Audio.GAX
         public Pointer<GAX_Channel>[] Channels { get; set; }
         public GAX_UnknownC UnknownC { get; set; }
 
-		public GAX_Channel GetChannel(int i) => Channels[i];
+		public GAX_Channel GetChannel(int i) => Channels[i]?.Value;
 
         public long? Pre_InstrumentsCount { get; set; }
         public long? Pre_SamplesCount { get; set; }
@@ -22,10 +22,10 @@ namespace BinarySerializer.GBA.Audio.GAX
             Channels = s.SerializePointerArray(Channels, 32, name: nameof(Channels));
             if (s.GetGAXSettings().EnableErrorChecking) {
                 for (int i = 0; i < Info.NumChannels; i++) {
-                    if (Channels[i] == null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is null");
+                    if (Channels[i].PointerValue == null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is null");
                 }
                 for (int i = Info.NumChannels; i < 32; i++) {
-                    if (Channels[i] != null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is not null");
+                    if (Channels[i].PointerValue != null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is not null");
                 }
             }
             foreach (var c in Channels) c?.Resolve(s, onPreSerialize: c => c.Song = this);

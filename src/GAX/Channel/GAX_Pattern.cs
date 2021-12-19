@@ -10,6 +10,7 @@ namespace BinarySerializer.GBA.Audio.GAX
 
         public override void SerializeImpl(SerializerObject s) {
             IsEmptyTrack = s.Serialize<bool>(IsEmptyTrack, name: nameof(IsEmptyTrack));
+            if(IsEmptyTrack) EndOffset = s.CurrentPointer;
             if (Rows == null) {
                 List<GAX_PatternRow> rows = new List<GAX_PatternRow>();
                 bool isEndOfTrack = IsEmptyTrack;

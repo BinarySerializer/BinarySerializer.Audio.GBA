@@ -11,5 +11,9 @@
             }
             return settings;
         }
+        public static GAX_Settings SetGAXSettings(this Context c, GAX_Settings settings) {
+            settings = c.StoreObject<GAX_Settings>(GAX_Settings.ContextID, settings);
+            return settings;
+        }
     }
 }
