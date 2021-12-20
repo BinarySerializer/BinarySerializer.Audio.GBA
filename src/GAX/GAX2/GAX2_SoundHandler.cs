@@ -32,6 +32,13 @@
 			TypeFlags = s.Serialize<uint>(TypeFlags, name: nameof(TypeFlags));
 			DataPointer = s.SerializePointer(DataPointer, name: nameof(DataPointer));
 
+			if (s.GetGAXSettings().EnableErrorChecking) {
+				if (InitFunction == null || PlayFunction == null || UnknownFunction == null)
+					throw new BinarySerializableException(this, $"One of the functions was null");
+				if (DataPointer == null)
+					throw new BinarySerializableException(this, $"Data pointer was null");
+			}
+
 			s.DoAt(ChildrenPointer, () => {
 				Children = s.SerializePointerArray<GAX2_SoundHandler>(Children, NumChildren, name: nameof(Children));
 			});

@@ -23,7 +23,7 @@ namespace BinarySerializer.GBA.Audio.GAX
         {
 			NumItems = s.Serialize<uint>(NumItems, name: nameof(NumItems));
             if (s.GetGAXSettings().EnableErrorChecking) {
-                if(NumItems < 4 || NumItems > 255)
+                if(NumItems < 4 || NumItems > 32+3)
                     throw new BinarySerializableException(this, $"Incorrect {nameof(NumItems)} value: {NumItems}");
             }
             if (NumItems > 0) UnknownCHandler = s.SerializePointer<GAX2_SoundHandler>(UnknownCHandler, name: nameof(UnknownCHandler));
@@ -31,6 +31,13 @@ namespace BinarySerializer.GBA.Audio.GAX
 			if (NumItems > 2) Unk = s.SerializePointer(Unk, name: nameof(Unk));
             int channelsCount = Math.Max((int)NumItems-3, 0);
 			ChannelHandlers = s.SerializePointerArray<GAX2_SoundHandler>(ChannelHandlers, channelsCount, name: nameof(ChannelHandlers));
+
+            if (s.GetGAXSettings().EnableErrorChecking) {
+                if (UnknownCHandler?.PointerValue == null
+                    || InfoHandler?.PointerValue == null
+                    || UnknownCHandler?.PointerValue == InfoHandler?.PointerValue)
+                    throw new BinarySerializableException(this, $"{nameof(UnknownCHandler)} or {nameof(InfoHandler)} was null or they were equal");
+            }
 
             InfoHandler?.Resolve(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.SongInfo);
             UnknownCHandler?.Resolve(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.UnknownC);
