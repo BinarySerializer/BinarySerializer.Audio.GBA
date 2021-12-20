@@ -12,8 +12,6 @@ namespace BinarySerializer.GBA.Audio.GAX
 
 		public bool EnableErrorChecking { get; set; } = false;
 
-		public const string ContextID = "GAX";
-
 		private const string VersionCheckString = "GAX Sound Engine ";
 		public bool SerializeVersion(SerializerObject s) {
 			var str = s.SerializeString(default, VersionCheckString.Length);
