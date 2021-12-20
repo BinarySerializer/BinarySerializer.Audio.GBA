@@ -12,7 +12,7 @@ namespace BinarySerializer.GBA.Audio.GAX {
 		public uint UInt_C4 { get; set; }
 
 		public override void SerializeImpl(SerializerObject s) {
-			UInt_A0 = s.Serialize<uint>(UInt_A0, name: nameof(UInt_A0));
+			if (s.GetGAXSettings().MajorVersion >= 2) UInt_A0 = s.Serialize<uint>(UInt_A0, name: nameof(UInt_A0));
 			if (s.GetGAXSettings().MajorVersion >= 3) {
 				UInts_A4 = s.SerializeArray<uint>(UInts_A4, 3, name: nameof(UInts_A4));
 				UInts_B0 = s.SerializeArray<uint>(UInts_B0, 3, name: nameof(UInts_B0));

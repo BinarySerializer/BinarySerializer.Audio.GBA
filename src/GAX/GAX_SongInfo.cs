@@ -39,20 +39,25 @@ namespace BinarySerializer.GBA.Audio.GAX {
                 if (NumPatternsPerChannel >= 0x100) throw new BinarySerializableException(this, $"Incorrect {nameof(NumPatternsPerChannel)}: {NumPatternsPerChannel}");
             }
             LoopPoint = s.Serialize<ushort>(LoopPoint, name: nameof(LoopPoint));
-            Volume = s.Serialize<ushort>(Volume, name: nameof(Volume));
-            UShort_0A = s.Serialize<ushort>(UShort_0A, name: nameof(UShort_0A));
+            if (s.GetGAXSettings().MajorVersion >= 2) {
+                Volume = s.Serialize<ushort>(Volume, name: nameof(Volume));
+                UShort_0A = s.Serialize<ushort>(UShort_0A, name: nameof(UShort_0A));
+            }
             SequenceDataPointer = s.SerializePointer(SequenceDataPointer, name: nameof(SequenceDataPointer));
             InstrumentSetPointer = s.SerializePointer(InstrumentSetPointer, name: nameof(InstrumentSetPointer));
             SampleSetPointer = s.SerializePointer(SampleSetPointer, name: nameof(SampleSetPointer));
-            SampleRate = s.Serialize<ushort>(SampleRate, name: nameof(SampleRate));
-            if (s.GetGAXSettings().MajorVersion >= 3) {
-                FXSampleRate = s.Serialize<ushort>(FXSampleRate, name: nameof(FXSampleRate));
-            }
-            NumFXChannels = s.Serialize<byte>(NumFXChannels, name: nameof(NumFXChannels));
-            Byte_1D = s.Serialize<byte>(Byte_1D, name: nameof(Byte_1D));
 
-            if (s.GetGAXSettings().MajorVersion >= 3) {
-                UShort_1E = s.Serialize<ushort>(UShort_1E, name: nameof(UShort_1E));
+            if (s.GetGAXSettings().MajorVersion >= 2) {
+                SampleRate = s.Serialize<ushort>(SampleRate, name: nameof(SampleRate));
+                if (s.GetGAXSettings().MajorVersion >= 3) {
+                    FXSampleRate = s.Serialize<ushort>(FXSampleRate, name: nameof(FXSampleRate));
+                }
+                NumFXChannels = s.Serialize<byte>(NumFXChannels, name: nameof(NumFXChannels));
+                Byte_1D = s.Serialize<byte>(Byte_1D, name: nameof(Byte_1D));
+
+                if (s.GetGAXSettings().MajorVersion >= 3) {
+                    UShort_1E = s.Serialize<ushort>(UShort_1E, name: nameof(UShort_1E));
+                }
             }
         }
 
