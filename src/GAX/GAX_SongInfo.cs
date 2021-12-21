@@ -39,7 +39,8 @@ namespace BinarySerializer.GBA.Audio.GAX {
                 if (NumPatternsPerChannel >= 0x100) throw new BinarySerializableException(this, $"Incorrect {nameof(NumPatternsPerChannel)}: {NumPatternsPerChannel}");
             }
             LoopPoint = s.Serialize<ushort>(LoopPoint, name: nameof(LoopPoint));
-            if (s.GetGAXSettings().MajorVersion >= 2) {
+            if (s.GetGAXSettings().MajorVersion >= 2
+                || (s.GetGAXSettings().MinorVersion == 99 && s.GetGAXSettings().MinorVersionAdd?.ToLower() == "f")) {
                 Volume = s.Serialize<ushort>(Volume, name: nameof(Volume));
                 UShort_0A = s.Serialize<ushort>(UShort_0A, name: nameof(UShort_0A));
             }

@@ -25,7 +25,7 @@ namespace BinarySerializer.GBA.Audio.GAX
 			if (m.Success) {
 				var major = m.Groups["major"].Value;
 				var minor = m.Groups["minor"].Value.TrimStart('0');
-				MinorVersionAdd = m.Groups["minoradd"].Success ? m.Groups["mminoradd"].Value : null;
+				MinorVersionAdd = m.Groups["minoradd"].Success ? m.Groups["minoradd"].Value : null;
 				if(int.TryParse(major, out int res_major)) MajorVersion = res_major;
 				else return false;
 				if(int.TryParse(minor, out int res_minor)) MinorVersion = res_minor;
