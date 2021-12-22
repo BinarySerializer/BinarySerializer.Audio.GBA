@@ -22,7 +22,7 @@ namespace BinarySerializer.GBA.Audio.GAX
                     if (curDuration >= Duration) {
                         isEndOfTrack = true;
                         EndOffset = s.CurrentPointer;
-                        s.Log($"GAX2 Track Duration: {curDuration} - Last Command: {row.Command}");
+                        s.Log($"GAX Pattern Duration: {curDuration} - Last Command: {row.Command}");
                     }
                 }
                 Rows = rows.ToArray();

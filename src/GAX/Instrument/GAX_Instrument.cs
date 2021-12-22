@@ -9,9 +9,9 @@ namespace BinarySerializer.GBA.Audio.GAX
         public byte Byte_05 { get; set; } // Padding?
         public byte Byte_06 { get; set; } // Padding?
         public byte Byte_07 { get; set; } // Padding?
-        public byte Byte_08 { get; set; } // Used for additional pitch calculation
-        public byte Byte_09 { get; set; } // Used for additional pitch calculation
-        public byte Byte_0A { get; set; } // Used for additional pitch calculation
+        public byte VibratoDelay { get; set; } // Close to vibrato sweep, but the vibrato only starts after "Delay" ticks, instead of fading in for "Sweep" ticks.
+        public byte VibratoDepth { get; set; }
+        public byte VibratoSpeed { get; set; }
         public byte Byte_0B { get; set; }
         public Pointer<GAX_InstrumentEnvelope> Envelope { get; set; }
         public Pointer GAX2_Unknown { get; set; }
@@ -29,9 +29,9 @@ namespace BinarySerializer.GBA.Audio.GAX
 			Byte_05 = s.Serialize<byte>(Byte_05, name: nameof(Byte_05));
 			Byte_06 = s.Serialize<byte>(Byte_06, name: nameof(Byte_06));
 			Byte_07 = s.Serialize<byte>(Byte_07, name: nameof(Byte_07));
-			Byte_08 = s.Serialize<byte>(Byte_08, name: nameof(Byte_08));
-			Byte_09 = s.Serialize<byte>(Byte_09, name: nameof(Byte_09));
-			Byte_0A = s.Serialize<byte>(Byte_0A, name: nameof(Byte_0A));
+			VibratoDelay = s.Serialize<byte>(VibratoDelay, name: nameof(VibratoDelay));
+			VibratoDepth = s.Serialize<byte>(VibratoDepth, name: nameof(VibratoDepth));
+			VibratoSpeed = s.Serialize<byte>(VibratoSpeed, name: nameof(VibratoSpeed));
 			Byte_0B = s.Serialize<byte>(Byte_0B, name: nameof(Byte_0B));
             if (s.GetGAXSettings().MajorVersion < 3) {
                 Samples = s.SerializeObjectArray<GAX_InstrumentSample>(Samples, 4, name: nameof(Samples));
