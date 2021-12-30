@@ -3,9 +3,6 @@
 namespace BinarySerializer.GBA.Audio.MusyX
 {
     public class MusyX_SampleTable : BinarySerializable {
-        // Set in OnPreSerialize
-        public Pointer BaseOffset { get; set; }
-
         public Pointer<MusyX_Sample>[] Samples { get; set; }
 
 
@@ -18,9 +15,9 @@ namespace BinarySerializer.GBA.Audio.MusyX
             // Hack to get length
             Pointer smpOff1 = null;
             s.DoAt(Offset, () => {
-                smpOff1 = s.SerializePointer(smpOff1, anchor: BaseOffset, name: nameof(smpOff1));
+                smpOff1 = s.SerializePointer(smpOff1, name: nameof(smpOff1));
             });
-            Samples = s.SerializePointerArray<MusyX_Sample>(Samples, (smpOff1 - Offset) / 4, anchor: BaseOffset, resolve: true, name: nameof(Samples));
+            Samples = s.SerializePointerArray<MusyX_Sample>(Samples, (smpOff1 - Offset) / 4, resolve: true, name: nameof(Samples));
         }
     }
 }

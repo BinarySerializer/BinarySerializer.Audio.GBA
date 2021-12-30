@@ -4,13 +4,12 @@ namespace BinarySerializer.GBA.Audio.MusyX
 {
     public class MusyX_SongTable : BinarySerializable {
         // Set in OnPreSerialize
-        public Pointer BaseOffset { get; set; }
         public Pointer EndOffset { get; set; }
 
         public uint Length { get; set; }
-        public Pointer[] Songs { get; set; }
+        public Pointer[] SongPointers { get; set; }
 
-        public byte[][] SongBytes { get; set; }
+        public MusyX_SongGroup[] Songs { get; set; }
 
         /// <summary>
         /// Handles the data serialization
@@ -19,14 +18,16 @@ namespace BinarySerializer.GBA.Audio.MusyX
         public override void SerializeImpl(SerializerObject s)
         {
             Length = s.Serialize<uint>(Length, name: nameof(Length));
-            Songs = s.SerializePointerArray(Songs, Length, anchor: BaseOffset, name: nameof(Songs));
+            SongPointers = s.SerializePointerArray(SongPointers, Length, name: nameof(SongPointers));
 
-            if (SongBytes == null) {
-                SongBytes = new byte[Songs.Length][];
+            if (Songs == null) {
+                Songs = new MusyX_SongGroup[SongPointers.Length];
                 for (int i = 0; i < Songs.Length; i++) {
-                    Pointer nextOff = (i < Songs.Length - 1) ? Songs[i + 1] : EndOffset;
-                    s.DoAt(Songs[i], () => {
-                        SongBytes[i] = s.SerializeArray<byte>(SongBytes[i], nextOff - Songs[i], name: $"{nameof(SongBytes)}[{i}]");
+                    Pointer nextOff = (i < SongPointers.Length - 1) ? SongPointers[i + 1] : EndOffset;
+                    s.DoAt(SongPointers[i], () => {
+						Songs[i] = s.SerializeObject<MusyX_SongGroup>(Songs[i], onPreSerialize: sng => {
+                            sng.Length = (uint)(nextOff - SongPointers[i]);
+                        }, name: $"{nameof(Songs)}[{i}]");
                     });
                 }
             }

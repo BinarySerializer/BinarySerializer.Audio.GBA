@@ -3,9 +3,6 @@
 namespace BinarySerializer.GBA.Audio.MusyX
 {
     public class MusyX_SFXGroup : BinarySerializable {
-        // Set in OnPreSerialize
-        public Pointer BaseOffset { get; set; }
-
         public uint Length { get; set; }
         public SoundEffect[] Entries { get; set; }
 

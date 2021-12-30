@@ -11,7 +11,7 @@ namespace BinarySerializer.GBA.Audio.GAX
         public uint LoopStart { get; set; }
         public uint LoopEnd { get; set; }
         public int Int_10 { get; set; }
-        public uint UShort_14 { get; set; }
+        public uint UShort_14 { get; set; } // A timer of some sort. Each UShort_14 ticks, it does something, but only if Byte_02 != 0
         public ushort UShort_16 { get; set; }
 
         public byte[] PaddingUnk { get; set; }
