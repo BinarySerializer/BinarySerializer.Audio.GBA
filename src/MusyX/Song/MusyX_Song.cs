@@ -18,8 +18,8 @@ namespace BinarySerializer.GBA.Audio.MusyX {
 		/// <param name="s">The serializer object</param>
 		public override void SerializeImpl(SerializerObject s) {
 			s.DoWithDefaults(new SerializerDefaults() {
-				Anchor = Offset,
-				NullValue = 0,
+				PointerAnchor = Offset,
+				PointerNullValue = 0,
 			}, () => {
 				TracksPointer = s.SerializePointer(TracksPointer, name: nameof(TracksPointer));
 				PatternsPointer = s.SerializePointer(PatternsPointer, name: nameof(PatternsPointer));

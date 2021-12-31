@@ -23,8 +23,8 @@ namespace BinarySerializer.GBA.Audio.MusyX
         public override void SerializeImpl(SerializerObject s)
         {
             s.DoWithDefaults(new SerializerDefaults() {
-                Anchor = Offset,
-                NullValue = 0
+                PointerAnchor = Offset,
+                PointerNullValue = 0
             }, () => {
                 InstrumentTable = s.SerializePointer<MusyX_InstrumentTable>(InstrumentTable, name: nameof(InstrumentTable));
                 SFXGroup1 = s.SerializePointer<MusyX_SFXGroup>(SFXGroup1, resolve: false, name: nameof(SFXGroup1)); // Don't resolve for now, this isn't parsed correctly
