@@ -5,8 +5,6 @@ namespace BinarySerializer.GBA.Audio.MusyX
 {
     public class MusyX_Track : BinarySerializable {
         public Entry[] Entries { get; set; }
-        public int EndLoopTime { get; set; }
-        public int Code { get; set; }
 
         public int StartLoopEntryOffset { get; set; }
         public int StartLoopTime { get; set; }
