@@ -21,6 +21,13 @@ namespace BinarySerializer.GBA.Audio.MusyX
             SampleRate = s.Serialize<ushort>(SampleRate, name: nameof(SampleRate));
             BaseNote = s.Serialize<ushort>(BaseNote, name: nameof(BaseNote));
             UInt_0C = s.Serialize<uint>(UInt_0C, name: nameof(UInt_0C));
+
+
+            if (s.GetMusyXSettings().EnableErrorChecking) {
+                if(LoopStart > Length || Length == 0 || Length >= 0x01000000)
+                    throw new BinarySerializableException(this, $"Invalid sample");
+            }
+
             SampleData = s.SerializeArray<sbyte>(SampleData, Length, name: nameof(SampleData));
         }
     }

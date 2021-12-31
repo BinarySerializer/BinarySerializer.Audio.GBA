@@ -18,6 +18,14 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 smpOff1 = s.SerializePointer(smpOff1, name: nameof(smpOff1));
             });
             Samples = s.SerializePointerArray<MusyX_Sample>(Samples, (smpOff1 - Offset) / 4, resolve: true, name: nameof(Samples));
+
+            if (s.GetMusyXSettings().EnableErrorChecking) {
+                var settings = s.GetMusyXSettings();
+                if(Samples == null || Samples.Length == 0) throw new BinarySerializableException(this, $"Sample table had 0 length");
+                for (int i = 0; i < Samples.Length; i++) {
+                    settings.CheckPointer(Samples[i], this, nameof(Samples), false);
+                }
+            }
         }
     }
 }

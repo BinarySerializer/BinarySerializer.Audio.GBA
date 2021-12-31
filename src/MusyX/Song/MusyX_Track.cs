@@ -16,10 +16,9 @@ namespace BinarySerializer.GBA.Audio.MusyX
         /// Handles the data serialization
         /// </summary>
         /// <param name="s">The serializer object</param>
-        public override void SerializeImpl(SerializerObject s)
-        {
+        public override void SerializeImpl(SerializerObject s) {
             Entries = s.SerializeObjectArrayUntil<Entry>(Entries, e => e.PatternIndex < 0, name: nameof(Entries));
-			StartLoopEntryOffset = s.Serialize<int>(StartLoopEntryOffset, name: nameof(StartLoopEntryOffset));
+            StartLoopEntryOffset = s.Serialize<int>(StartLoopEntryOffset, name: nameof(StartLoopEntryOffset));
 			StartLoopTime = s.Serialize<int>(StartLoopTime, name: nameof(StartLoopTime));
 
             // Error checking
@@ -27,7 +26,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 throw new BinarySerializableException(this, $"{nameof(StartLoopEntryOffset)} had incorrect value: {StartLoopEntryOffset}");
             }
             var lastEntry = Entries[Entries.Length-1];
-            if (lastEntry.PatternIndex != -1 || lastEntry.PatternIndex != -2) {
+            if (lastEntry.PatternIndex != -1 && lastEntry.PatternIndex != -2) {
                 throw new BinarySerializableException(this, $"Last Track Entry did not have index -1 or -2: {lastEntry.PatternIndex}");
             }
         }
