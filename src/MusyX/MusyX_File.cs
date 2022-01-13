@@ -7,10 +7,10 @@ namespace BinarySerializer.GBA.Audio.MusyX
     /// </summary>
     public class MusyX_File : BinarySerializable
     {
-        public Pointer<MusyX_InstrumentTable> InstrumentTable { get; set; } // Sounds?
-        public Pointer<MusyX_SFXGroup> SFXGroup1 { get; set; } // Layers? in Rayman Advance this points to a list. in RHR, this points to a pointer (or a list of pointers with only 1 entry), which points to 1 8 byte struct
-        public Pointer<MusyX_SFXGroup> SFXGroup2 { get; set; } // Keymaps?
-        public Pointer<MusyX_SFXGroup> SFXGroup3 { get; set; } // Soundmacros?
+        public Pointer<MusyX_SoundMacroTable> InstrumentTable { get; set; } // Sounds?
+        public Pointer<MusyX_SFXGroup> Pointer_04 { get; set; } // Layers? in Rayman Advance this points to a list. in RHR, this points to a pointer (or a list of pointers with only 1 entry), which points to 1 8 byte struct
+        public Pointer<MusyX_SFXGroup> Pointer_08 { get; set; } // Keymaps?
+        public Pointer<MusyX_SFXGroup> SFXGroup { get; set; } // Soundmacros?
         public uint UInt_10 { get; set; }
         public uint UInt_14 { get; set; }
         public Pointer<MusyX_SongTable> SongTable { get; set; }
@@ -26,10 +26,10 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 PointerAnchor = Offset,
                 PointerNullValue = 0
             }, () => {
-                InstrumentTable = s.SerializePointer<MusyX_InstrumentTable>(InstrumentTable, name: nameof(InstrumentTable));
-                SFXGroup1 = s.SerializePointer<MusyX_SFXGroup>(SFXGroup1, resolve: false, name: nameof(SFXGroup1)); // Don't resolve for now, this isn't parsed correctly
-                SFXGroup2 = s.SerializePointer<MusyX_SFXGroup>(SFXGroup2, resolve: false, name: nameof(SFXGroup2));
-                SFXGroup3 = s.SerializePointer<MusyX_SFXGroup>(SFXGroup3, resolve: false, name: nameof(SFXGroup3));
+                InstrumentTable = s.SerializePointer<MusyX_SoundMacroTable>(InstrumentTable, name: nameof(InstrumentTable));
+                Pointer_04 = s.SerializePointer<MusyX_SFXGroup>(Pointer_04, resolve: false, name: nameof(Pointer_04)); // Don't resolve for now, this isn't parsed correctly
+                Pointer_08 = s.SerializePointer<MusyX_SFXGroup>(Pointer_08, resolve: false, name: nameof(Pointer_08));
+                SFXGroup = s.SerializePointer<MusyX_SFXGroup>(SFXGroup, resolve: false, name: nameof(SFXGroup));
                 UInt_10 = s.Serialize<uint>(UInt_10, name: nameof(UInt_10));
                 UInt_14 = s.Serialize<uint>(UInt_14, name: nameof(UInt_14));
                 SongTable = s.SerializePointer<MusyX_SongTable>(SongTable, name: nameof(SongTable));
@@ -38,9 +38,9 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 if (s.GetMusyXSettings().EnableErrorChecking) {
                     var settings = s.GetMusyXSettings();
                     settings.CheckPointer(InstrumentTable, this, nameof(InstrumentTable), false);
-                    settings.CheckPointer(SFXGroup1, this, nameof(SFXGroup1), true);
-                    settings.CheckPointer(SFXGroup2, this, nameof(SFXGroup2), true);
-                    settings.CheckPointer(SFXGroup3, this, nameof(SFXGroup3), true);
+                    settings.CheckPointer(Pointer_04, this, nameof(Pointer_04), true);
+                    settings.CheckPointer(Pointer_08, this, nameof(Pointer_08), true);
+                    settings.CheckPointer(SFXGroup, this, nameof(SFXGroup), true);
                     settings.CheckPointer(SongTable, this, nameof(SongTable), true);
                     settings.CheckPointer(SampleTable, this, nameof(SampleTable), false);
                 }
@@ -51,11 +51,11 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 });
 
                 // Read SFXGroup3
-                SFXGroup3.Resolve(s);
+                SFXGroup.Resolve(s);
 
                 // Read instrument table
                 InstrumentTable.Resolve(s, onPreSerialize: st => {
-                    st.EndOffset = SFXGroup1.PointerValue;
+                    st.EndOffset = Pointer_04.PointerValue;
                 });
 
                 // Read song table
