@@ -15,7 +15,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
         {
             Messages = s.SerializeObjectArrayUntil<MusyX_Message>(Messages, m => m.IsEnd, getLastObjFunc: () => new MusyX_Message() {
                 AsInt = -1
-            }, onPreSerialize: m => m.Pre_IsControlMessage = Pre_IsControlPattern, name: nameof(Messages));
+            }, onPreSerialize: (m, _) => m.Pre_IsControlMessage = Pre_IsControlPattern, name: nameof(Messages));
         }
     }
 }
