@@ -83,7 +83,7 @@ namespace BinarySerializer.GBA.Audio.GAX {
                     }
                 }
                 UsedInstrumentIndices = instruments.Distinct().ToArray();
-                s.Log("Instrument Count: " + UsedInstrumentIndices.Length);
+                s.Log("Instrument Count: {0}", UsedInstrumentIndices.Length);
 
                 // Parse name
                 if (endOffset != null) {
@@ -94,7 +94,7 @@ namespace BinarySerializer.GBA.Audio.GAX {
                         if (m.Success) {
                             ParsedName = m.Groups["title"].Value;
                             ParsedArtist = m.Groups["artist"].Value;
-                            s.Log($"{ParsedName} - {ParsedArtist}");
+                            s.Log("{0} - {1}", ParsedName, ParsedArtist);
                         } else {
                             if (s.GetGAXSettings().EnableErrorChecking) {
                                 throw new BinarySerializableException(this, $"GAX name check failed for {nameof(Name)}: {Name}");
