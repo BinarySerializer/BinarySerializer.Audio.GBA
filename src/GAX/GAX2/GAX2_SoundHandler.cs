@@ -1,4 +1,4 @@
-﻿namespace BinarySerializer.GBA.Audio.GAX {
+﻿namespace BinarySerializer.Audio.GBA.GAX {
 	// See https://github.com/loveemu/gaxtapper/blob/main/src/gaxtapper/gax_sound_handler_v2.cpp
 	public class GAX2_SoundHandler : BinarySerializable {
 		public Pointer InitFunction { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX_PatternRow : BinarySerializable
     {

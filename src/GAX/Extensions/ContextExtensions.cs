@@ -1,4 +1,4 @@
-﻿namespace BinarySerializer.GBA.Audio.GAX {
+﻿namespace BinarySerializer.Audio.GBA.GAX {
     public static class ContextExtensions {
         public static GAX_Settings GetGAXSettings(this SerializerObject s) => s.Context.GetGAXSettings();
         public static GAX_Settings GetGAXSettings(this Context c) {

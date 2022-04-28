@@ -1,4 +1,4 @@
-﻿namespace BinarySerializer.GBA.Audio.GAX
+﻿namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX3_File : BinarySerializable
     {

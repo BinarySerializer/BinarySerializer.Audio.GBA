@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX_Pattern : BinarySerializable {
         public ushort Duration { get; set; }

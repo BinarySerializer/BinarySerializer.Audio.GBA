@@ -1,4 +1,4 @@
-﻿namespace BinarySerializer.GBA.Audio.MusyX {
+﻿namespace BinarySerializer.Audio.GBA.MusyX {
     public static class ContextExtensions {
         public static MusyX_Settings GetMusyXSettings(this SerializerObject s) => s.Context.GetMusyXSettings();
         public static MusyX_Settings GetMusyXSettings(this Context c) {

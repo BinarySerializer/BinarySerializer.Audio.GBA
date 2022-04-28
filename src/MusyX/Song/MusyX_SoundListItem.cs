@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BinarySerializer.GBA.Audio.MusyX
+namespace BinarySerializer.Audio.GBA.MusyX
 {
     public class MusyX_SoundListItem : BinarySerializable {
         public ushort ObjectID { get; set; }

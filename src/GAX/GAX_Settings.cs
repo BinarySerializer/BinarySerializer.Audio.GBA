@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
 	public class GAX_Settings {
 		public int MajorVersion { get; set; }

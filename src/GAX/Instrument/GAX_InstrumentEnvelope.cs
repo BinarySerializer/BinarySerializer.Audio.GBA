@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX_InstrumentEnvelope : BinarySerializable {
         public byte NumPoints { get; set; }

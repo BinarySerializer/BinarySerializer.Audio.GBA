@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX2_Song : BinarySerializable, IGAX_Song
     {

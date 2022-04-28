@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BinarySerializer.GBA.Audio.GAX {
+namespace BinarySerializer.Audio.GBA.GAX {
     public class GAX_SongInfo : GAX_Entity {
         public ushort NumChannels { get; set; } // Actually a byte?
         public ushort NumRowsPerPattern { get; set; }

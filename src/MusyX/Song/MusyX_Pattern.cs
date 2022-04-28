@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 
-namespace BinarySerializer.GBA.Audio.MusyX
+namespace BinarySerializer.Audio.GBA.MusyX
 {
     public class MusyX_Pattern : BinarySerializable {
         public bool Pre_IsControlPattern { get; set; }

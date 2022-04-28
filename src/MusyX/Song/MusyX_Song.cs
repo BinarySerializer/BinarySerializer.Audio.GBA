@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace BinarySerializer.GBA.Audio.MusyX {
+namespace BinarySerializer.Audio.GBA.MusyX {
 	public class MusyX_Song : BinarySerializable {
 		// Set in OnPreSerialize
 		public Pointer TracksPointer { get; set; }
