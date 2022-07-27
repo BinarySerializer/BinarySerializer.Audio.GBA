@@ -36,7 +36,7 @@ namespace BinarySerializer.Audio.GBA.GAX
             if (s.GetGAXSettings().MajorVersion < 3) {
                 Samples = s.SerializeObjectArray<GAX_InstrumentSample>(Samples, 4, name: nameof(Samples));
             }
-            Envelope = s.SerializePointer<GAX_InstrumentEnvelope>(Envelope, resolve: true, name: nameof(Envelope));
+            Envelope = s.SerializePointer<GAX_InstrumentEnvelope>(Envelope, name: nameof(Envelope))?.ResolveObject(s);
             if (s.GetGAXSettings().MajorVersion < 3) {
 				GAX2_Unknown = s.SerializePointer(GAX2_Unknown, name: nameof(GAX2_Unknown));
 			}

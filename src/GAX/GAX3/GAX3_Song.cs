@@ -28,7 +28,7 @@ namespace BinarySerializer.Audio.GBA.GAX
                     if (Channels[i].PointerValue != null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is not null");
                 }
             }
-            foreach (var c in Channels) c?.Resolve(s, onPreSerialize: c => c.Song = this);
+            Channels?.ResolveObject(s, onPreSerialize: (c, _) => c.Song = this);
 
 			UnknownC = s.SerializeObject<GAX_UnknownC>(UnknownC, onPreSerialize: c => c.Song = this, name: nameof(UnknownC));
 

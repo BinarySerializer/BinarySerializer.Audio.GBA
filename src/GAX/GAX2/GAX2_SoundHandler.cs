@@ -60,11 +60,7 @@
 		}
 
 		public void SerializeValues<T>(SerializerObject s, EntityType? childType) where T : GAX_Entity, new() {
-			if (Children != null) {
-				foreach (var c in Children) {
-					c.Resolve(s, onPreSerialize: c => c.Pre_Type = childType);
-				}
-			}
+			Children?.ResolveObject(s, onPreSerialize: (c, _) => c.Pre_Type = childType);
 			s.DoAt(DataPointer, () => {
 				Data = s.SerializeObject<T>((T)Data, onPreSerialize: d => d.Handler = this, name: nameof(Data));
 			});

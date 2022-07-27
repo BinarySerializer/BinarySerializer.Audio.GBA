@@ -103,7 +103,8 @@ namespace BinarySerializer.Audio.GBA.GAX {
                     });
                 }
                 s.DoAt(InstrumentSetPointer, () => {
-                    InstrumentSet = s.SerializePointerArray<GAX_Instrument>(InstrumentSet, predefinedInstrumentCount ?? instrumentCount, resolve: true, name: nameof(InstrumentSet));
+                    InstrumentSet = s.SerializePointerArray<GAX_Instrument>(InstrumentSet, predefinedInstrumentCount ?? instrumentCount, name: nameof(InstrumentSet))
+                        ?.ResolveObject(s);
                 });
                 /*Samples = new GAX_Sample[PredefinedSampleCount ?? InstrumentIndices.Length];
                 for (int i = 0; i < Samples.Length; i++) {

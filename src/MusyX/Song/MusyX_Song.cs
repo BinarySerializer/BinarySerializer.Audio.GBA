@@ -26,20 +26,20 @@ namespace BinarySerializer.Audio.GBA.MusyX {
 				BPM = s.Serialize<ushort>(BPM, name: nameof(BPM));
 
 				s.DoAt(TracksPointer, () => {
-					Tracks = s.SerializePointerArray<MusyX_Track>(Tracks, 17, resolve: true, name: nameof(Tracks));
+					Tracks = s.SerializePointerArray<MusyX_Track>(Tracks, 17, name: nameof(Tracks))?.ResolveObject(s);
 				});
 				if (Tracks != null) {
 					int patternsCount = Tracks.Max(t => t.Value?.Entries.Max(te => te.PatternIndex + 1) ?? 0);
 					if (patternsCount > 0) {
 						s.DoAt(PatternsPointer, () => {
-							Patterns = s.SerializePointerArray<MusyX_Pattern>(Patterns, patternsCount, resolve: false, name: nameof(Patterns));
+							Patterns = s.SerializePointerArray<MusyX_Pattern>(Patterns, patternsCount, name: nameof(Patterns));
 						});
 						for (int i = 0; i < Tracks.Length; i++) {
 							if(Tracks[i].Value == null) continue;
 							bool isControlTrack = i == 16;
 							foreach (var e in Tracks[i].Value.Entries) {
 								if (e.PatternIndex >= 0) {
-									Patterns[e.PatternIndex].Resolve(s, onPreSerialize: t => t.Pre_IsControlPattern = isControlTrack);
+									Patterns[e.PatternIndex]?.ResolveObject(s, onPreSerialize: t => t.Pre_IsControlPattern = isControlTrack);
 								}
 							}
 						}

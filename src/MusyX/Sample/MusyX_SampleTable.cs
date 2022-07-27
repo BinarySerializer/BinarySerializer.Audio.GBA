@@ -17,7 +17,8 @@ namespace BinarySerializer.Audio.GBA.MusyX
             s.DoAt(Offset, () => {
                 smpOff1 = s.SerializePointer(smpOff1, name: nameof(smpOff1));
             });
-            Samples = s.SerializePointerArray<MusyX_Sample>(Samples, (smpOff1 - Offset) / 4, resolve: true, name: nameof(Samples));
+            Samples = s.SerializePointerArray<MusyX_Sample>(Samples, (smpOff1 - Offset) / 4, name: nameof(Samples))
+                ?.ResolveObject(s);
 
             if (s.GetMusyXSettings().EnableErrorChecking) {
                 var settings = s.GetMusyXSettings();
