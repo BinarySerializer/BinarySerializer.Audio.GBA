@@ -13,9 +13,9 @@ namespace BinarySerializer.Audio.GBA.GAX
         public override void SerializeImpl(SerializerObject s)
         {
             NumPoints = s.Serialize<byte>(NumPoints, name: nameof(NumPoints));
-            Sustain = s.Serialize<byte?>(Sustain, name: nameof(Sustain));
-            LoopStart = s.Serialize<byte?>(LoopStart, name: nameof(LoopStart));
-            LoopEnd = s.Serialize<byte?>(LoopEnd, name: nameof(LoopEnd));
+            Sustain = s.SerializeNullable<byte>(Sustain, name: nameof(Sustain));
+            LoopStart = s.SerializeNullable<byte>(LoopStart, name: nameof(LoopStart));
+            LoopEnd = s.SerializeNullable<byte>(LoopEnd, name: nameof(LoopEnd));
             Points = s.SerializeObjectArray<Point>(Points, NumPoints, name: nameof(Points));
         }
 
