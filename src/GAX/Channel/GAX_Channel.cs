@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX {
+namespace BinarySerializer.Audio.GBA.GAX {
 	public class GAX_Channel : GAX_Entity {
 		public GAX_SongInfo SongInfo => Song?.Info ?? Handler?.Children[0]?.Value?.GetData<GAX_SongInfo>();
 

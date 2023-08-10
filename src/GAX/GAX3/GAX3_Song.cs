@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX3_Song : BinarySerializable, IGAX_Song
     {
@@ -28,7 +28,7 @@ namespace BinarySerializer.GBA.Audio.GAX
                     if (Channels[i].PointerValue != null) throw new BinarySerializableException(this, $"{nameof(Channels)}[{i}] is not null");
                 }
             }
-            foreach (var c in Channels) c?.Resolve(s, onPreSerialize: c => c.Song = this);
+            Channels?.ResolveObject(s, onPreSerialize: (c, _) => c.Song = this);
 
 			UnknownC = s.SerializeObject<GAX_UnknownC>(UnknownC, onPreSerialize: c => c.Song = this, name: nameof(UnknownC));
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BinarySerializer.GBA.Audio.MusyX
+namespace BinarySerializer.Audio.GBA.MusyX
 {
 	public class MusyX_Settings {
 		public bool EnableErrorChecking { get; set; } = false;

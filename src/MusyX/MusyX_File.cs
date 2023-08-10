@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BinarySerializer.GBA.Audio.MusyX
+namespace BinarySerializer.Audio.GBA.MusyX
 {
     /// <summary>
     /// Base file for GBA MusyX
@@ -27,9 +27,9 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 PointerNullValue = 0
             }, () => {
                 InstrumentTable = s.SerializePointer<MusyX_SoundMacroTable>(InstrumentTable, name: nameof(InstrumentTable));
-                Pointer_04 = s.SerializePointer<MusyX_SFXGroup>(Pointer_04, resolve: false, name: nameof(Pointer_04)); // Don't resolve for now, this isn't parsed correctly
-                Pointer_08 = s.SerializePointer<MusyX_SFXGroup>(Pointer_08, resolve: false, name: nameof(Pointer_08));
-                SFXGroup = s.SerializePointer<MusyX_SFXGroup>(SFXGroup, resolve: false, name: nameof(SFXGroup));
+                Pointer_04 = s.SerializePointer<MusyX_SFXGroup>(Pointer_04, name: nameof(Pointer_04)); // Don't resolve for now, this isn't parsed correctly
+                Pointer_08 = s.SerializePointer<MusyX_SFXGroup>(Pointer_08, name: nameof(Pointer_08));
+                SFXGroup = s.SerializePointer<MusyX_SFXGroup>(SFXGroup, name: nameof(SFXGroup));
                 UInt_10 = s.Serialize<uint>(UInt_10, name: nameof(UInt_10));
                 UInt_14 = s.Serialize<uint>(UInt_14, name: nameof(UInt_14));
                 SongTable = s.SerializePointer<MusyX_SongTable>(SongTable, name: nameof(SongTable));
@@ -46,20 +46,20 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 }
 
                 // Read sample table first as errors will usually occur here if it's not a valid MusyX file
-                SampleTable.Resolve(s, onPreSerialize: st => {
+                SampleTable.ResolveObject(s, onPreSerialize: st => {
                     //st.EndOffset = SampleTable.pointer;
                 });
 
                 // Read SFXGroup3
-                SFXGroup.Resolve(s);
+                SFXGroup.ResolveObject(s);
 
                 // Read instrument table
-                InstrumentTable.Resolve(s, onPreSerialize: st => {
+                InstrumentTable?.ResolveObject(s, onPreSerialize: st => {
                     st.EndOffset = Pointer_04.PointerValue;
                 });
 
                 // Read song table
-                SongTable.Resolve(s, onPreSerialize: st => {
+                SongTable?.ResolveObject(s, onPreSerialize: st => {
                     st.EndOffset = SampleTable.PointerValue;
                 });
             });

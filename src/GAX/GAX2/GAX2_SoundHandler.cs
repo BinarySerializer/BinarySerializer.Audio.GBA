@@ -1,4 +1,4 @@
-﻿namespace BinarySerializer.GBA.Audio.GAX {
+﻿namespace BinarySerializer.Audio.GBA.GAX {
 	// See https://github.com/loveemu/gaxtapper/blob/main/src/gaxtapper/gax_sound_handler_v2.cpp
 	public class GAX2_SoundHandler : BinarySerializable {
 		public Pointer InitFunction { get; set; }
@@ -60,11 +60,7 @@
 		}
 
 		public void SerializeValues<T>(SerializerObject s, EntityType? childType) where T : GAX_Entity, new() {
-			if (Children != null) {
-				foreach (var c in Children) {
-					c.Resolve(s, onPreSerialize: c => c.Pre_Type = childType);
-				}
-			}
+			Children?.ResolveObject(s, onPreSerialize: (c, _) => c.Pre_Type = childType);
 			s.DoAt(DataPointer, () => {
 				Data = s.SerializeObject<T>((T)Data, onPreSerialize: d => d.Handler = this, name: nameof(Data));
 			});

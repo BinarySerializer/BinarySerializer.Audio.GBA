@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
-    public class GAX_PatternRow : BinarySerializable
+    public class GAX_PatternRow : BinarySerializable, ISerializerShortLog
     {
         public byte Flags { get; set; }
         public byte Note { get; set; }
@@ -93,8 +93,7 @@ namespace BinarySerializer.GBA.Audio.GAX
             SetSpeed          = 15, // Sets the module Speed (ticks per row)
         }
 
-		public override bool UseShortLog => true;
-		public override string ShortLog => ToString();
+		public string ShortLog => ToString();
 
 		public override string ToString() {
 			string str = $"[Flags:{Flags:X2}] {Command,10}(";

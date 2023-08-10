@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BinarySerializer.GBA.Audio.GAX {
+namespace BinarySerializer.Audio.GBA.GAX {
 	public interface IGAX_Song {
 		public Pointer Offset { get; }
 		public GAX_SongInfo Info { get; }

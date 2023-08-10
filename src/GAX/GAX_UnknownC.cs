@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX {
+namespace BinarySerializer.Audio.GBA.GAX {
 	public class GAX_UnknownC : GAX_Entity {
 		public uint UInt_A0 { get; set; }
 		public uint[] UInts_A4 { get; set; }

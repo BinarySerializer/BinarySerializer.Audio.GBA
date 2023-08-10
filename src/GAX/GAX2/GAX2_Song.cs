@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BinarySerializer.GBA.Audio.GAX
+namespace BinarySerializer.Audio.GBA.GAX
 {
     public class GAX2_Song : BinarySerializable, IGAX_Song
     {
@@ -39,10 +39,10 @@ namespace BinarySerializer.GBA.Audio.GAX
                     throw new BinarySerializableException(this, $"{nameof(UnknownCHandler)} or {nameof(InfoHandler)} was null or they were equal");
             }
 
-            InfoHandler?.Resolve(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.SongInfo);
-            UnknownCHandler?.Resolve(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.UnknownC);
+            InfoHandler?.ResolveObject(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.SongInfo);
+            UnknownCHandler?.ResolveObject(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.UnknownC);
             foreach (var ch in ChannelHandlers) {
-                ch?.Resolve(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.Channel);
+                ch?.ResolveObject(s, onPreSerialize: h => h.Pre_Type = GAX2_SoundHandler.EntityType.Channel);
             }
 
             Info?.ParseInstrumentsAndChannels(s, UnknownCHandler?.Value?.Children.Select(c => c.Value?.GetData<GAX_Channel>()));

@@ -1,2 +1,2 @@
-# BinarySerializer.GBA.Audio
-BinarySerializer.GBA.Audio is an extension library to [BinarySerializer](https://github.com/RayCarrot/BinarySerializer), created by [Byvar](https://github.com/byvar) and [RayCarrot](https://github.com/RayCarrot). It supports serializing GBA audio structures.
+# BinarySerializer.Audio.GBA
+BinarySerializer.Audio.GBA is an extension library to [BinarySerializer](https://github.com/BinarySerializer/BinarySerializer). It supports serializing GBA audio structures.

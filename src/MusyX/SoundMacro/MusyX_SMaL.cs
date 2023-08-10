@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BinarySerializer.GBA.Audio.MusyX
+namespace BinarySerializer.Audio.GBA.MusyX
 {
     public class MusyX_SMaL : BinarySerializable {
         public CommandType Command { get; set; }

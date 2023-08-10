@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BinarySerializer.GBA.Audio.GAX {
+namespace BinarySerializer.Audio.GBA.GAX {
     public class GAX_SongInfo : GAX_Entity {
         public ushort NumChannels { get; set; } // Actually a byte?
         public ushort NumRowsPerPattern { get; set; }
@@ -83,18 +83,18 @@ namespace BinarySerializer.GBA.Audio.GAX {
                     }
                 }
                 UsedInstrumentIndices = instruments.Distinct().ToArray();
-                s.Log("Instrument Count: " + UsedInstrumentIndices.Length);
+                s.Log("Instrument Count: {0}", UsedInstrumentIndices.Length);
 
                 // Parse name
                 if (endOffset != null) {
                     s.DoAt(endOffset, () => {
-                        Name = s.Serialize<string>(Name, name: nameof(Name));
+                        Name = s.SerializeString(Name, name: nameof(Name));
                         const string GAXNamePattern = @"^""(?<title>[^""]*)"" © (?<artist>[A-Za-z0-9_\-\s]*).*";
                         var m = Regex.Match(Name, GAXNamePattern);
                         if (m.Success) {
                             ParsedName = m.Groups["title"].Value;
                             ParsedArtist = m.Groups["artist"].Value;
-                            s.Log($"{ParsedName} - {ParsedArtist}");
+                            s.Log("{0} - {1}", ParsedName, ParsedArtist);
                         } else {
                             if (s.GetGAXSettings().EnableErrorChecking) {
                                 throw new BinarySerializableException(this, $"GAX name check failed for {nameof(Name)}: {Name}");
@@ -103,7 +103,8 @@ namespace BinarySerializer.GBA.Audio.GAX {
                     });
                 }
                 s.DoAt(InstrumentSetPointer, () => {
-                    InstrumentSet = s.SerializePointerArray<GAX_Instrument>(InstrumentSet, predefinedInstrumentCount ?? instrumentCount, resolve: true, name: nameof(InstrumentSet));
+                    InstrumentSet = s.SerializePointerArray<GAX_Instrument>(InstrumentSet, predefinedInstrumentCount ?? instrumentCount, name: nameof(InstrumentSet))
+                        ?.ResolveObject(s);
                 });
                 /*Samples = new GAX_Sample[PredefinedSampleCount ?? InstrumentIndices.Length];
                 for (int i = 0; i < Samples.Length; i++) {
