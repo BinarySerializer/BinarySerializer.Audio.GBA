@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 
 namespace BinarySerializer.GBA.Audio.MusyX
 {
@@ -8,7 +9,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
         public byte[] InstrumentBytes { get; set; } // SMaL (Sound Macro Language)
         public sbyte Voice { get; set; }
         public byte Flags { get; set; }
-        public byte Type { get; set; }
+        public bool IsKeymap { get; set; }
         public byte Unknown { get; set; }
         public MusyX_SMaL[] Commands { get; set; }
         public MusyX_Keymap Keymap { get; set; }
@@ -26,13 +27,24 @@ namespace BinarySerializer.GBA.Audio.MusyX
 
 			Voice = s.Serialize<sbyte>(Voice, name: nameof(Voice));
 			Flags = s.Serialize<byte>(Flags, name: nameof(Flags));
-			Type = s.Serialize<byte>(Type, name: nameof(Type));
+			IsKeymap = s.Serialize<bool>(IsKeymap, name: nameof(IsKeymap));
 			Unknown = s.Serialize<byte>(Unknown, name: nameof(Unknown));
 
-            if (Type == 0)
+            if (!IsKeymap) {
                 Commands = s.SerializeObjectArrayUntil<MusyX_SMaL>(Commands, c => c.Command == MusyX_SMaL.CommandType.END, name: nameof(Commands));
-            else
-				Keymap = s.SerializeObject<MusyX_Keymap>(Keymap, name: nameof(Keymap));
+                var command = Commands.FirstOrDefault(c =>
+                    c.Command == MusyX_SMaL.CommandType.STARTSAMPLE ||
+                    c.Command == MusyX_SMaL.CommandType.STARTSAMPLE_KEYMAP ||
+                    c.Command == MusyX_SMaL.CommandType.VOICE_ON ||
+                    c.Command == MusyX_SMaL.CommandType.SETNOISE);
+                if (command == null) {
+                    s.Log("No STARTSAMPLE command!");
+                } else {
+                    s.Log($"STARTSAMPLE command: {command.Command}");
+                }
+            } else {
+                Keymap = s.SerializeObject<MusyX_Keymap>(Keymap, name: nameof(Keymap));
+            }
 		}
     }
 }

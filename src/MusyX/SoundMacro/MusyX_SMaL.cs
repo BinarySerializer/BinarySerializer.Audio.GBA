@@ -53,7 +53,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
                 CommandType.Command26 => SerializeData<Command26>(),
                 CommandType.Command27 => SerializeData<Command27>(),
                 CommandType.Command28 => SerializeData<Command28>(),
-                CommandType.Command29 => SerializeData<Command29>(),
+                CommandType.STARTSAMPLE_KEYMAP => SerializeData<STARTSAMPLE_KEYMAP>(),
                 CommandType.Command30 => SerializeData<Command30>(),
                 CommandType.Command31 => SerializeData<Command31>(),
                 CommandType.VOICE_ON => SerializeData<VOICE_ON>(),
@@ -114,7 +114,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
             Command26 = 26,
             Command27 = 27,
             Command28 = 28,
-            Command29 = 29,
+            STARTSAMPLE_KEYMAP = 29,
             Command30 = 30,
             Command31 = 31,
             VOICE_ON = 32,
@@ -397,7 +397,7 @@ namespace BinarySerializer.GBA.Audio.MusyX
 				Short2 = s.Serialize<short>(Short2, name: nameof(Short2));
 			}
         }
-        public class Command29 : CommandData { // 29
+        public class STARTSAMPLE_KEYMAP : CommandData { // 29
             public byte Byte1 { get; set; }
             public short MacroIndex { get; set; }
             public short Key { get; set; } // Not sure if correct
